@@ -1,0 +1,12 @@
+@import '../../scss/';
+
+.checkboxContainer {
+  margin: 3px;
+  label{
+    margin-right: 10px;
+  }
+  input[type=checkbox] {
+    transform: scale(1.5);
+    padding: 10px;
+  }
+}

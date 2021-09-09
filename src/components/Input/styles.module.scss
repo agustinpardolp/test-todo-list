@@ -1,0 +1,11 @@
+@import '../../scss/';
+
+.inputContainer {
+    margin: 10px;
+
+    input {
+        margin: 10px;
+        height: 2rem;
+        width: fill-available;
+    }
+}

@@ -1,0 +1,22 @@
+@import '../../scss/';
+
+.container {
+  height: 100vh;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 15px;
+  padding-left: 15px;
+
+  .titleContainer {
+    align-items: center;
+    background-color: $budGreen;
+    height: 10vh;
+    display: flex;
+    justify-content: flex-start;
+
+    h2 {
+      color: $white;
+      margin: 15px;
+    }
+  }
+}
