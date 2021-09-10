@@ -17,7 +17,7 @@ const TodoList = ({ todosArray }) => {
       setTodos([
         ...todos,
         {
-          id: todosArray.length + 1,
+          id: todos.length + 1,
           title: inputValue,
           status: statusTypes.TODO,
         },
@@ -28,7 +28,7 @@ const TodoList = ({ todosArray }) => {
   const handleInputValue = (e) => {
     setInputValue(e.target.value);
   };
-  
+
   const handleSetTodoValues = (newTodos, value, status) => {
     const index = todos.findIndex((todo) => todo.id === value.id);
     newTodos.splice(index, 1, { ...value, status: status });
