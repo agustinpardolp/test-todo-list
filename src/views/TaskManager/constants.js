@@ -45,6 +45,6 @@ export  const todoListArray = [
   ];
 
   export const viewLabels = {
-    inputPlaceholder: 'Ingrese una nueva tarea',
-    buttonLabel: 'Agregar nueva tarea'
+    inputPlaceholder: ' Ingrese una nueva tarea',
+    buttonLabel: ' Agregar nueva lista'
 }

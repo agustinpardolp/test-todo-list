@@ -3,11 +3,12 @@
 .todoListContainer {
   border: solid 1px $darkSlateBlue;
   background-color: $ligthSteelBlue;
-  display: flex;
+  display: grid;
   flex-direction: column;
-  height: 30vh;
+  grid-template-rows: 15% 60% 25%;
   justify-content: space-around;
   margin: 10px;
+  width: max-content;
   li{
     font-size: 1.2rem;
   }
@@ -16,5 +17,11 @@
 .todosContainer {
   display: table;
   height: 100%;
+  padding: 10px;
+}
+
+.todoListTitle{
+  color: $darkSlateBlue;
+  display: flex;
   padding: 10px;
 }

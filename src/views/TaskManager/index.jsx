@@ -1,19 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "../../components/Button";
 import ViewWrapper from "../../components/ViewWraper";
+import { fetchTodoList } from "../../services";
 import TodoList from "./components/TodoList";
-import { todoListArray, viewLabels } from "./constants";
+import { viewLabels } from "./constants";
 import styles from "./styles.module.scss";
 
 const TaskManager = () => {
-  const [todos, setTodos] = useState(todoListArray);
+  const [todos, setTodos] = useState([]);
 
+  useEffect(() => {
+    fetchTodoList().then((response) => {
+      setTodos(response.data)
+    })
+  }, [])
   const handleAddTodo = (e) => {
     setTodos([
       ...todos,
-      { id: todos.length + 1, title: e.target.value, todos: [] },
+      { id: todos.length + 1, title: `Todo ${todos.length + 1}`, todos: [] },
     ]);
   };
+
   return (
     <ViewWrapper>
       <div className={styles.todoListContainer}>
@@ -22,7 +29,7 @@ const TaskManager = () => {
             return (
               <TodoList
                 key={todoContainer.id}
-                title={todoContainer}
+                title={todoContainer.title}
                 todosArray={todoContainer.todos}
               />
             );

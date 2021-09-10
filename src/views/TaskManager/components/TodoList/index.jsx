@@ -3,11 +3,11 @@ import Input from "../../../../components/Input";
 import { viewLabels } from "../../constants";
 import Todo from "../Todo";
 import { statusTypes } from "../Todo/constants";
-import { initialInputState } from "./constants";
+import { initialInputState, onlyLettersRegex } from "./constants";
 
 import styles from "./styles.module.scss";
 
-const TodoList = ({ todosArray }) => {
+const TodoList = ({ todosArray, title }) => {
   const [todos, setTodos] = useState(todosArray);
   const [inputValue, setInputValue] = useState(initialInputState);
 
@@ -41,6 +41,9 @@ const TodoList = ({ todosArray }) => {
 
   return (
     <div className={styles.todoListContainer}>
+      <div  className={styles.todoListTitle}>
+        <h4>{title}</h4>
+      </div>
       <ul className={styles.todosContainer}>
         {todos &&
           todos.map((todoValue) => {
@@ -58,6 +61,8 @@ const TodoList = ({ todosArray }) => {
           placeholder={viewLabels.inputPlaceholder}
           handleChange={handleInputValue}
           value={inputValue}
+          errorMessage='Error del valor'
+          regex={onlyLettersRegex}
         />
       </form>
     </div>

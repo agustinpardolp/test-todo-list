@@ -9,19 +9,22 @@ const Todo = ({ handleChange, value }) => {
   const onCheckStatus = useMemo(() => {
     return handleCheckStatus(value);
   }, [value]);
+  
+  const { nextStatus, isChecked, isDisabled } = onCheckStatus
 
   return (
     <li className={styles.todoContainer}>
       <Checkbox
-        onChange={() => handleChange(value, onCheckStatus.nextStatus)}
-        isChecked={onCheckStatus.isChecked}
-        isDisabled={onCheckStatus.isDisabled}
+        onChange={() => handleChange(value, nextStatus)}
+        isChecked={isChecked}
+        isDisabled={isDisabled}
         label={value.title}
       />
       {value.status === statusTypes.DONE ? (
         <Button
           label="archivar"
           handleClick={() => handleChange(value, statusTypes.ARCHIVED)}
+          variant="warning"
         />
       ) : null}
     </li>

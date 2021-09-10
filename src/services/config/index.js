@@ -1,0 +1,1 @@
+export const BASE_URL = "https://mocki.io/v1/124a2604-2939-46f3-8ee9-d04dfa9cc65a";
