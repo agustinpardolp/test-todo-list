@@ -3,7 +3,7 @@
 .todoListContainer {
   border: solid 1px $darkSlateBlue;
   background-color: $ligthSteelBlue;
-  display: grid;
+  display: flex;
   flex-direction: column;
   justify-content: space-around;
   margin: 10px;
