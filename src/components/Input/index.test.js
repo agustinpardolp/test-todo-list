@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor, act } from "@testing-library/react";
 import userEvent from '@testing-library/user-event'
 import "@testing-library/jest-dom";
 
@@ -10,54 +10,73 @@ const inputValueTest = 'tarea test a agregar';
 const inputValueRegexOk = 'Its only letters';
 const inputValueRegexFail = '%&%$%$%';
 const errorMessageTest = 'Ocurrio un error test';
-//focus si esta disabled!!!
+
 describe("Input", () => {
-    test("Render correctly", async () => {
-        render(<Input placeholder={InputPlaceholder} label={inputLabel} />);
+    const defaultProps = {
+        placeholder: InputPlaceholder,
+        handleChange: jest.fn(),
+        disabled: false
+    }
+    test('should be defined', () => {
+        expect(Input).toBeDefined();
+    });
+    test("should render correctly", async () => {
+        render(<Input {...defaultProps} />);
         const inputComponent = screen.getByRole('textbox', InputPlaceholder)
         expect(screen.getByPlaceholderText(InputPlaceholder)).toBeInTheDocument();
         expect(inputComponent).not.toBeDisabled();
-        expect(screen.getByText(inputLabel)).toBeInTheDocument();
     });
-    test("Change values correctly", async () => {
-        const handleChange = jest.fn();
-        render(<Input placeholder={InputPlaceholder} handleChange={handleChange} value={inputValueTest} />);
+    test("should change values correctly", async () => {
+        render(<Input  {...defaultProps} />);
         const inputComponent = screen.getByRole('textbox', InputPlaceholder)
+        userEvent.type(inputComponent, inputValueTest);
         await waitFor(() => {
-           fireEvent.change(inputComponent, inputValueTest);
             expect(inputComponent).toHaveValue(inputValueTest)
             expect(inputComponent).not.toHaveValue('')
         })
     });
-    test("Doesn`t show message error with a correct value type", async () => {
-        const handleChange = jest.fn();
-        render(<Input placeholder={InputPlaceholder} errorMessage={errorMessageTest} handleChange={handleChange} regex={onlyLettersRegex} />);
+    test("should not show message error with a correct value type", async () => {
+
+        render(<Input  {...defaultProps} errorMessage={errorMessageTest} regex={onlyLettersRegex} />);
         userEvent.type(screen.getByRole('textbox'), inputValueRegexOk)
         expect(screen.queryByText(errorMessageTest)).not.toBeInTheDocument();
     });
 
-    test("Shows message error with a wrong value type", async () => {
-        const handleChange = jest.fn();
-        render(<Input placeholder={InputPlaceholder} errorMessage={errorMessageTest} handleChange={handleChange} regex={onlyLettersRegex} />);
+    test("should shows message error with a wrong value type", async () => {
+        render(<Input  {...defaultProps} errorMessage={errorMessageTest} regex={onlyLettersRegex} />);
         userEvent.type(screen.getByRole('textbox'), inputValueRegexFail)
         expect(screen.getByText(errorMessageTest)).toBeInTheDocument();
     });
-    test("Doesn`t show message error if field is empty", async () => {
-        const handleChange = jest.fn();
-        render(<Input placeholder={InputPlaceholder} errorMessage={errorMessageTest} handleChange={handleChange} regex={onlyLettersRegex} />);
+    test("should not show message error if field is empty", async () => {
+        render(<Input  {...defaultProps} errorMessage={errorMessageTest} regex={onlyLettersRegex} />);
         userEvent.type(screen.getByRole('textbox'), '')
         expect(screen.queryByText(errorMessageTest)).not.toBeInTheDocument();
     });
-    test("Works as default if regex props doesnt exist", async () => {
-        const handleChange = jest.fn();
-        render(<Input placeholder={InputPlaceholder} handleChange={handleChange} regex={onlyLettersRegex} />);
+    test("should works as default input if regex props does`t exist", async () => {
+        render(<Input {...defaultProps}  />);
         userEvent.type(screen.getByRole('textbox'), inputValueRegexFail)
         expect(screen.queryByText(errorMessageTest)).not.toBeInTheDocument();
     });
-    test("Doesnt work if prop disabled is true ", async () => {
-        const handleChange = jest.fn();
-        render(<Input placeholder={InputPlaceholder} handleChange={handleChange} regex={onlyLettersRegex} disabled={true} />);
+    test("should not work if prop disabled is true ", async () => {
+        render(<Input {...defaultProps} disabled={true} />);
         const inputComponent = screen.getByRole('textbox', InputPlaceholder)
         expect(inputComponent).toBeDisabled();
     });
+    test("should be focus if prop disabled is false", async () => {
+        render(<Input  {...defaultProps} regex={onlyLettersRegex} />);
+        const inputComponent = screen.getByRole('textbox')
+        act(() => inputComponent.focus());
+        expect(inputComponent).toHaveFocus();
+    });
+    test("should not to be focus if prop disabled is true", async () => {
+        render(<Input {...defaultProps} disabled={true} />);
+        const inputComponent = screen.getByRole('textbox')
+        act(() => inputComponent.focus());
+        expect(inputComponent).not.toHaveFocus();
+    });
+    it('should render text when label has value', () => {
+        render(<Input {...defaultProps} label ={inputLabel}/>);
+        expect(screen.getByText(inputLabel)).toBeInTheDocument();
+    });
+
 });

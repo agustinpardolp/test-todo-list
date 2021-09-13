@@ -22,7 +22,7 @@ const TaskManager = () => {
   };
 
   return (
-    <ViewWrapper>
+    <ViewWrapper title={viewLabels.title}>
       <div className={styles.todoListContainer}>
         {todos?.length &&
           todos.map((todoContainer) => {

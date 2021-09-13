@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import Button from "../../../../components/Button";
 import Checkbox from "../../../../components/Checkbox";
-import { handleCheckStatus, statusTypes } from "./constants";
+import { handleCheckStatus, statusTypes, todoLabels } from "./constants";
 import styles from "./styles.module.scss";
 
 const Todo = ({ handleChange, value }) => {
@@ -22,7 +22,7 @@ const Todo = ({ handleChange, value }) => {
       />
       {value.status === statusTypes.DONE ? (
         <Button
-          label="archivar"
+          label={todoLabels.buttonLabel}
           handleClick={() => handleChange(value, statusTypes.ARCHIVED)}
           variant="warning"
         />

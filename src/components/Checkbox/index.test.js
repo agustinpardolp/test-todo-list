@@ -1,58 +1,41 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import userEvent from '@testing-library/user-event'
+import { render, screen, fireEvent } from "@testing-library/react";
+
 import "@testing-library/jest-dom";
 
 import Checkbox from ".";
-import { onlyLettersRegex } from "../../views/TaskManager/components/TodoList/constants";
-const checkboxPlaceholder = 'Agregar nueva tarea test';
 const checkboxLabel = 'Todo check 1'
-const checkboxValueTest = 'tarea test a agregar';
-const inputValueRegexOk = 'Its only letters';
-const inputValueRegexFail = '%&%$%$%';
-const errorMessageTest = 'Ocurrio un error test';
+
+const defaultProps = {
+    label:checkboxLabel,
+    onChange : jest.fn(),
+    isDisabled: false
+}
 
 describe("Checkbox", () => {
-    test("Render correctly", async () => {
-        render(<Checkbox label={checkboxLabel} />);
+    test('should be defined', () => {
+        expect(Checkbox).toBeDefined();
+      });
+    test("sould render correctly", async () => {
+        render(<Checkbox {...defaultProps} />);
         const checkboxComponent = screen.getByRole('checkbox')
         expect(checkboxComponent).not.toBeDisabled();
     });
-    test("Change values correctly", async () => {
-        const onChange = jest.fn();
-        render(<Checkbox onChange={onChange} isChecked={false} />);
+    test("should change values correctly", async () => {
+        render(<Checkbox {...defaultProps} />);
         const checkboxComponent = screen.getByRole('checkbox')
-            userEvent.type(screen.findByRole('checkbox'))
-            expect(checkboxComponent).toBeChecked()
+        expect(checkboxComponent.checked).toEqual(false)
+        fireEvent.click(checkboxComponent)
+        expect(checkboxComponent.checked).toEqual(true)
     });
-    // test("Doesn`t show message error with a correct value type", async () => {
-    //     const handleChange = jest.fn();
-    //     render(<Checkbox placeholder={checkboxPlaceholder} errorMessage={errorMessageTest} handleChange={handleChange} regex={onlyLettersRegex} />);
-    //     userEvent.type(screen.getByRole('textbox'), inputValueRegexOk)
-    //     expect(screen.queryByText(errorMessageTest)).not.toBeInTheDocument();
-    // });
-
-    // test("Shows message error with a wrong value type", async () => {
-    //     const handleChange = jest.fn();
-    //     render(<Checkbox placeholder={checkboxPlaceholder} errorMessage={errorMessageTest} handleChange={handleChange} regex={onlyLettersRegex} />);
-    //     userEvent.type(screen.getByRole('textbox'), inputValueRegexFail)
-    //     expect(screen.getByText(errorMessageTest)).toBeInTheDocument();
-    // });
-    // test("Doesn`t show message error if field is empty", async () => {
-    //     const handleChange = jest.fn();
-    //     render(<Checkbox placeholder={checkboxPlaceholder} errorMessage={errorMessageTest} handleChange={handleChange} regex={onlyLettersRegex} />);
-    //     userEvent.type(screen.getByRole('textbox'), '')
-    //     expect(screen.queryByText(errorMessageTest)).not.toBeInTheDocument();
-    // });
-    // test("Works as default if regex props doesnt exist", async () => {
-    //     const handleChange = jest.fn();
-    //     render(<Checkbox placeholder={checkboxPlaceholder} handleChange={handleChange} regex={onlyLettersRegex} />);
-    //     userEvent.type(screen.getByRole('textbox'), inputValueRegexFail)
-    //     expect(screen.queryByText(errorMessageTest)).not.toBeInTheDocument();
-    // });
-    // test("Doesnt work if prop disabled is true ", async () => {
-    //     const handleChange = jest.fn();
-    //     render(<Checkbox placeholder={InputPlaceholder} handleChange={handleChange} regex={onlyLettersRegex} disabled={true} />);
-    //     const inputComponent = screen.getByRole('textbox', InputPlaceholder)
-    //     expect(inputComponent).toBeDisabled();
-    // });
+    test("should be disabled if disabled property is true", async () => {
+        render(<Checkbox {...defaultProps} isDisabled={true} />);
+        const checkboxComponent = screen.getByRole('checkbox')
+        expect(checkboxComponent).toBeDisabled();
+    });
+    test("should not be disabled if disabled property is true", async () => {
+        render(<Checkbox {...defaultProps} />);
+        const checkboxComponent = screen.getByRole('checkbox')
+        expect(checkboxComponent).not.toBeDisabled();
+    });
+    
 });

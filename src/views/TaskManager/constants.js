@@ -46,5 +46,6 @@ export  const todoListArray = [
 
   export const viewLabels = {
     inputPlaceholder: ' Ingrese una nueva tarea',
-    buttonLabel: ' Agregar nueva lista'
+    buttonLabel: ' Agregar nueva lista',
+    title: 'TodoList - Task manager'
 }
