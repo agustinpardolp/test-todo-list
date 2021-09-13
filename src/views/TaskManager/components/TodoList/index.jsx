@@ -38,7 +38,6 @@ const TodoList = ({ todosArray, title }) => {
     let newTodos = todos.slice();
     handleSetTodoValues(newTodos, value, status);
   };
-
   return (
     <div className={styles.todoListContainer}>
       <div  className={styles.todoListTitle}>
