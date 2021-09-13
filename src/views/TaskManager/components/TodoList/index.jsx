@@ -3,7 +3,7 @@ import Input from "../../../../components/Input";
 import { viewLabels } from "../../constants";
 import Todo from "../Todo";
 import { statusTypes } from "../Todo/constants";
-import { initialInputState, onlyLettersRegex } from "./constants";
+import { initialInputState, onlyLettersRegex, todoListLabels } from "./constants";
 
 import styles from "./styles.module.scss";
 
@@ -61,7 +61,7 @@ const TodoList = ({ todosArray, title }) => {
           placeholder={viewLabels.inputPlaceholder}
           handleChange={handleInputValue}
           value={inputValue}
-          errorMessage='Error del valor'
+          errorMessage={todoListLabels.errorMessage}
           regex={onlyLettersRegex}
         />
       </form>
