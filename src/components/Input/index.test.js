@@ -42,7 +42,7 @@ describe("Input", () => {
     });
 
     test("should shows message error with a wrong value type", async () => {
-        render(<Input  {...defaultProps} errorMessage={errorMessageTest} regex={onlyLettersRegex} />);
+        render(<Input  {...defaultProps} errorMessage={errorMessageTest} regex={onlyLettersRegex} error={true} />);
         userEvent.type(screen.getByRole('textbox'), inputValueRegexFail)
         expect(screen.getByText(errorMessageTest)).toBeInTheDocument();
     });
