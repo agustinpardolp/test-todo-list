@@ -36,7 +36,6 @@ describe("Input", () => {
         })
     });
     test("should not show message error with a correct value type", async () => {
-
         render(<Input  {...defaultProps} errorMessage={errorMessageTest} regex={onlyLettersRegex} />);
         userEvent.type(screen.getByRole('textbox'), inputValueRegexOk)
         expect(screen.queryByText(errorMessageTest)).not.toBeInTheDocument();

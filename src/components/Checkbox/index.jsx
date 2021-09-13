@@ -4,7 +4,7 @@ import styles from "./styles.module.scss";
 const Checkbox = ({ onChange, isChecked, isDisabled, label }) => {
   return (
     <div className={styles.checkboxContainer}>
-      {label && <label htmlFor="">{label}</label>}
+      {label && <label htmlFor="checkbox">{label}</label>}
       <input
         type="checkbox"
         onChange={onChange}
